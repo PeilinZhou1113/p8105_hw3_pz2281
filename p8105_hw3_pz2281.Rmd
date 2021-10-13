@@ -26,9 +26,26 @@ scale_fill_discrete = scale_fill_viridis_d
 
 ## Problem 1
 read in instacart data
+
 ```{r}
 library(p8105.datasets)
 data("instacart")
+instacart
 ```
+
+The instacart dataset contains `r nrow(instacart)` observations with `r ncol(instacart)` variables. Each row represents a product from an order. The data contains customer information with unique user_id as a variable and there are `r length(unique(instacart$user_id))` unique customers. There are total of `r length(unique(instacart$department))` departments and `r length(unique(instacart$aisles))` aisles. The products from each order_id are ordered by the add_to_cart_order from the customer.
+
+```{r}
+aisle_freq = instacart %>% 
+  group_by(aisle) %>% 
+  summarize(
+    n_obs = n()
+  )
+aisle_freq %>% 
+  slice_max(n_obs)
+```
+
+
+
 
 
