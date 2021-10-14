@@ -125,7 +125,16 @@ cof_ice_mean_hour = instacart %>%
 
 table_mean_hour_day = bind_rows(apple_mean_hour, cof_ice_mean_hour) %>% 
   knitr::kable("simple")
+table_mean_hour_day
 ```
+
+## Problem 2
+load the brfss data first
+```{r}
+data("brfss_smart2010")
+```
+
+
 
 
 
