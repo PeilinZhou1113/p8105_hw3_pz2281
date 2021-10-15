@@ -188,6 +188,40 @@ brfss_health_clean %>%
   )
 ```
 
+Making plots for the distribution of data_value in 2006 and 2010.
+
+```{r}
+plot_2010 = brfss_health_clean %>% 
+  filter(year == "2010" & state == "NY") %>% 
+  group_by(response, location_state) %>% 
+  summarize(
+    mean_data_val = mean(data_value)
+  ) %>% 
+  ggplot(aes(x = response, y = mean_data_val, color = location_state)) +
+  geom_line(aes(group = location_state)) +
+  labs(
+    title = "Average Data Value Based on Response Level for Locations in NY state for 2010"
+  )
+#  geom_text(data = filter(response == last(response)),
+#              aes(label = location_state),
+#              hjust = 0, nudge_x = 0.1)
+```
+
+
+```{r}
+plot_2006 = brfss_health_clean %>% 
+  filter(year == "2006" & state == "NY") %>% 
+  group_by(response, location_state) %>% 
+  summarize(
+    mean_data_val = mean(data_value)
+  ) %>% 
+  ggplot(aes(x = response, y = mean_data_val, color = location_state)) +
+  geom_line(aes(group = location_state)) +
+  labs(
+    title = "Average Data Value Based on Response Level for Locations in NY state for 2006"
+  )
+```
+
 
 
 
