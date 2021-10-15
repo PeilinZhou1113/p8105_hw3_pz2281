@@ -139,7 +139,7 @@ data("brfss_smart2010")
 brfss_health_clean = 
   brfss_smart2010 %>% 
   janitor::clean_names() %>% 
-  rename(location_abbr = locationabbr, location_desc = locationdesc, resp_id = respid) %>% 
+  rename(state = locationabbr, location_state = locationdesc, resp_id = respid) %>% 
   mutate(resp_id = gsub("RESP", "", resp_id)) %>% 
   filter(topic == "Overall Health") %>% 
   mutate(response = factor(response, c("Poor", "Fair", "Good", "Very good", "Excellent")))
@@ -154,9 +154,9 @@ brfss_health_clean = brfss_health_clean %>%
 
 brfss_health_clean %>% 
   filter(year == "2002") %>% 
-  group_by(location_abbr) %>% 
+  group_by(state) %>% 
   summarise(
-    n_loc = n_distinct(location_desc)
+    n_loc = n_distinct(location_state)
   ) %>% 
   filter(n_loc >= 7)
 ```
@@ -165,14 +165,20 @@ There were 6 statesthat were observed in more than 7 locations for year 2002. Th
 ```{r}
 brfss_health_clean %>% 
   filter(year == "2010") %>% 
-  group_by(location_abbr) %>% 
+  group_by(state) %>% 
   summarise(
-    n_loc = n_distinct(location_desc)
+    n_loc = n_distinct(location_state)
   ) %>% 
   filter(n_loc >= 7)
 ```
 There are 14 states in 2010 which were observed in more than 7 locations. It was 8 states more than that in 2002. More health data were collected in different locations for health assessment.
 
+
+```{r}
+brfss_health_clean %>% 
+  filter(response == "Excellent") %>% 
+  group_by(year, state)
+```
 
 
 
