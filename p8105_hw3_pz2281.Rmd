@@ -144,8 +144,34 @@ brfss_health_clean =
   filter(topic == "Overall Health") %>% 
   mutate(response = factor(response, c("Poor", "Fair", "Good", "Very good", "Excellent")))
 #since the responses for the "overall health" question were only in form of poor, fair, good, very good, to excellent, we don't need to do another filter operation.
-  
 ```
+
+Find states that were observed at 7 or more locations for 2002 and 2010.
+
+```{r}
+brfss_health_clean = brfss_health_clean %>% 
+  mutate(year = as.character(year))
+
+brfss_health_clean %>% 
+  filter(year == "2002") %>% 
+  group_by(location_abbr) %>% 
+  summarise(
+    n_loc = n_distinct(location_desc)
+  ) %>% 
+  filter(n_loc >= 7)
+```
+There were 6 statesthat were observed in more than 7 locations for year 2002. They were Connecticut, Florida, Massachusetts, North Carolina, New Jersey, and Pennsylvania.
+
+```{r}
+brfss_health_clean %>% 
+  filter(year == "2010") %>% 
+  group_by(location_abbr) %>% 
+  summarise(
+    n_loc = n_distinct(location_desc)
+  ) %>% 
+  filter(n_loc >= 7)
+```
+There are 14 states in 2010 which were observed in more than 7 locations. It was 8 states more than that in 2002. More health data were collected in different locations for health assessment.
 
 
 
