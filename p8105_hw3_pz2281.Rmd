@@ -10,8 +10,8 @@ library(patchwork)
 
 knitr::opts_chunk$set(
   fig.width = 8,
-  fig.asp = 1,
-  out.width = "100%" #shrunk down the size 
+  fig.asp = .8,
+  out.width = "95%"
 )
 
 options(
@@ -32,7 +32,7 @@ data("instacart")
 instacart
 ```
 
-The instacart dataset contains `r nrow(instacart)` observations with `r ncol(instacart)` variables. Each row represents a product from an order. The data contains customer information with unique user_id as a variable and there are `r length(unique(instacart$user_id))` unique customers. There are total of `r length(unique(instacart$department))` departments, `r length(unique(instacart$aisles))` aisles, and `r length(unique(instacart$product_name))` products in total. The products from each order_id are ordered by the add_to_cart_order from the customer. The order_hour_of_day variable documents the hour of when the order was made. The average order hour of a day for all customers in this dataset is  `r mean(instacart$order_hour_of_day)`.
+The instacart dataset contains `r nrow(instacart)` observations with `r ncol(instacart)` variables. Each row represents a product from an order. The data contains customer information with unique user_id as a variable and there are `r length(unique(instacart$user_id))` unique customers. There are total of `r length(unique(instacart$department))` departments, `r length(unique(instacart$aisle))` aisles, and `r length(unique(instacart$product_name))` products in total. The products from each order_id are ordered by the add_to_cart_order from the customer. The order_hour_of_day variable documents the hour of when the order was made. The average order hour of a day for all customers in this dataset is  `r mean(instacart$order_hour_of_day)`.
 
 ```{r}
 aisle_freq = instacart %>% 
@@ -44,7 +44,7 @@ most_ord_aisle = aisle_freq %>%
   slice_max(n_obs)
 ```
 
-There are `r length(unique(instacart$aisle))` aisles and the aisle that most items are ordered from is `r most_ord_aisle`, which makes sense since most people often order vegetables online from instacart, amazon fresh etc.
+There are `r length(unique(instacart$aisle))` aisles and the aisle that most items are ordered from is `r most_ord_aisle` items, which makes sense in real life, since people often order vegetables online from instacart, amazon fresh etc.
 
 ```{r}
 aisle_freq %>% 
@@ -258,7 +258,7 @@ total_activity_table = accel_df %>%
 total_activity_table
 ```
 
-Based on the table, we can see that on weekends(Saturday and Sunday) the 35-day record of the 63-year-old male tended to have lower activity counts. Typically, there were two Saturdays which the male seemed to have no activity at all, or maybe he had taken off the accelerometer on those days. And on Wednesday, the male normally had activity counts around 350000 to 450000.
+Based on the table, we can see that on weekends(Saturday and Sunday), the 63-year-old male tended to have lower activity counts in the 35-day record. Typically, there were two Saturdays which the male seemed to have no activity at all, or maybe he had taken off the accelerometer on those days. And on Wednesday, the male normally had activity counts around 350000 to 450000.
 
 Next, we plot the 24-hour activity time courses for each day.
 ```{r}
@@ -268,9 +268,6 @@ Next, we plot the 24-hour activity time courses for each day.
   scale_x_continuous(
     breaks = c(0, 240, 480, 720, 960, 1200, 1440),
     labels = c("0:00", "4:00", "8:00", "12:00", "16:00", "20:00", "24:00")
-  )
-  scale_y_continuous(
-    breaks = c(0, 2500, 5000, 7500)
   )
 ```
 
